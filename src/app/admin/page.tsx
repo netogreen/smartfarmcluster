@@ -12,7 +12,7 @@ const STATUS_OPTIONS = [
   "보류",
 ];
 
-const ADMIN_KEY = "클러스터2026";
+const ADMIN_KEY = "cluster2026";
 
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);

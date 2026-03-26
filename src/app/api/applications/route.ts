@@ -3,7 +3,7 @@ import { addApplication, getApplications, updateApplicationStatus } from "@/lib/
 
 export async function GET(req: NextRequest) {
   const adminKey = req.nextUrl.searchParams.get("key");
-  if (adminKey !== process.env.ADMIN_KEY && adminKey !== "클러스터2026") {
+  if (adminKey !== process.env.ADMIN_KEY && adminKey !== "cluster2026") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const apps = await getApplications();
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const adminKey = req.nextUrl.searchParams.get("key");
-  if (adminKey !== process.env.ADMIN_KEY && adminKey !== "클러스터2026") {
+  if (adminKey !== process.env.ADMIN_KEY && adminKey !== "cluster2026") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
