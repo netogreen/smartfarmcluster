@@ -5,15 +5,6 @@ import { cropModels, cropList, CropModel } from "@/lib/cropModels";
 import { calculateCrop, formatManWon } from "@/lib/calculate";
 import Link from "next/link";
 
-// 1만평 배치도 블록 데이터
-const layoutBlocks = [
-  { key: "paprika", label: "파프리카", modules: 13, area: "3,151평", color: "bg-green-200", col: "col-span-1", row: "row-span-1" },
-  { key: "strawberry", label: "딸기", modules: 8, area: "1,939평", color: "bg-pink-200", col: "col-span-1", row: "row-span-1" },
-  { key: "cucumber", label: "오이", modules: 6, area: "1,454평", color: "bg-blue-200", col: "col-span-1", row: "row-span-1" },
-  { key: "cherryTomato", label: "방울토마토", modules: 7, area: "1,697평", color: "bg-red-200", col: "col-span-1", row: "row-span-1" },
-  { key: "salad", label: "샐러드", modules: 10, area: "1,000평", color: "bg-yellow-200", col: "col-span-1", row: "row-span-1" },
-  { key: "facility", label: "제반시설", modules: 0, area: "1,000평", color: "bg-gray-300", col: "col-span-1", row: "row-span-1" },
-];
 
 export default function CalculatorPage() {
   const [selectedCropKey, setSelectedCropKey] = useState<string>("");
@@ -240,82 +231,99 @@ export default function CalculatorPage() {
             아래 배치도는 1만평 기준 참고 예시입니다. 실제 공급 배치와 조건은 프로젝트별로 달라질 수 있습니다.
           </p>
 
-          {/* Schematic Block View */}
+          {/* Schematic Block View - 면적 비례 배치 */}
           <div className="bg-gray-50 rounded-2xl p-4 md:p-6 border border-gray-200">
-            <div className="grid grid-cols-2 gap-2 md:gap-3 max-w-2xl mx-auto">
-              {/* West Block Header */}
-              <div className="text-center">
-                <p className="text-xs font-medium text-gray-500 mb-2">WEST BLOCK</p>
-              </div>
-              {/* East Block Header */}
-              <div className="text-center">
-                <p className="text-xs font-medium text-gray-500 mb-2">EAST BLOCK</p>
+            <div className="max-w-2xl mx-auto">
+              {/* Block Headers */}
+              <div className="grid grid-cols-[1fr_40px_1fr] mb-2">
+                <p className="text-xs font-medium text-gray-500 text-center">WEST BLOCK</p>
+                <div />
+                <p className="text-xs font-medium text-gray-500 text-center">EAST BLOCK</p>
               </div>
 
-              {/* Paprika */}
-              <LayoutBlock
-                label="파프리카"
-                modules={13}
-                area="3,151평"
-                color="bg-green-100 border-green-300"
-                selectedCropKey={selectedCropKey}
-                cropKey="paprika"
-                result={result}
-                tall
-              />
-              {/* Strawberry */}
-              <LayoutBlock
-                label="딸기"
-                modules={8}
-                area="1,939평"
-                color="bg-pink-100 border-pink-300"
-                selectedCropKey={selectedCropKey}
-                cropKey="strawberry"
-                result={result}
-              />
+              {/* Main Layout - 과채 4종 면적 비례 */}
+              <div className="grid grid-cols-[1fr_40px_1fr] gap-0">
+                {/* West Column: 파프리카(13) + 오이(6) = 19 modules */}
+                <div className="flex flex-col gap-2">
+                  <LayoutBlock
+                    label="파프리카"
+                    modules={13}
+                    areaPy={3146}
+                    color="bg-green-100 border-green-300"
+                    selectedCropKey={selectedCropKey}
+                    cropKey="paprika"
+                    result={result}
+                    heightModules={13}
+                    maxModules={19}
+                  />
+                  <LayoutBlock
+                    label="오이"
+                    modules={6}
+                    areaPy={1452}
+                    color="bg-blue-100 border-blue-300"
+                    selectedCropKey={selectedCropKey}
+                    cropKey="cucumber"
+                    result={result}
+                    heightModules={6}
+                    maxModules={19}
+                  />
+                </div>
 
-              {/* Cucumber */}
-              <LayoutBlock
-                label="오이"
-                modules={6}
-                area="1,454평"
-                color="bg-blue-100 border-blue-300"
-                selectedCropKey={selectedCropKey}
-                cropKey="cucumber"
-                result={result}
-              />
-              {/* Cherry Tomato */}
-              <LayoutBlock
-                label="방울토마토"
-                modules={7}
-                area="1,697평"
-                color="bg-red-100 border-red-300"
-                selectedCropKey={selectedCropKey}
-                cropKey="cherryTomato"
-                result={result}
-                tall
-              />
+                {/* Center Road */}
+                <div className="flex items-center justify-center">
+                  <div className="h-full w-px bg-gray-300 relative">
+                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px] text-gray-400 whitespace-nowrap -rotate-90 bg-gray-50 px-1">
+                      물류도로 10m
+                    </span>
+                  </div>
+                </div>
 
-              {/* Salad */}
-              <LayoutBlock
-                label="샐러드"
-                modules={10}
-                area="1,000평"
-                color="bg-yellow-100 border-yellow-300"
-                selectedCropKey={selectedCropKey}
-                cropKey="salad"
-                result={result}
-              />
-              {/* Facility */}
-              <div className="border border-gray-300 bg-gray-200 rounded-lg p-3 md:p-4 text-center">
-                <p className="text-xs font-medium text-gray-600">제반시설</p>
-                <p className="text-xs text-gray-500">1,000평</p>
+                {/* East Column: 딸기(8) + 방울토마토(7) = 15 modules */}
+                <div className="flex flex-col gap-2">
+                  <LayoutBlock
+                    label="딸기"
+                    modules={8}
+                    areaPy={1936}
+                    color="bg-pink-100 border-pink-300"
+                    selectedCropKey={selectedCropKey}
+                    cropKey="strawberry"
+                    result={result}
+                    heightModules={8}
+                    maxModules={15}
+                  />
+                  <LayoutBlock
+                    label="방울토마토"
+                    modules={7}
+                    areaPy={1694}
+                    color="bg-red-100 border-red-300"
+                    selectedCropKey={selectedCropKey}
+                    cropKey="cherryTomato"
+                    result={result}
+                    heightModules={7}
+                    maxModules={15}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 중앙 물류도로 */}
-            <div className="text-center mt-3">
-              <p className="text-xs text-gray-400">↕ 중앙 물류도로 10m</p>
+              {/* Bottom Row: 샐러드 + 제반시설 (고정 높이) */}
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <LayoutBlock
+                  label="샐러드"
+                  modules={10}
+                  areaPy={1000}
+                  color="bg-yellow-100 border-yellow-300"
+                  selectedCropKey={selectedCropKey}
+                  cropKey="salad"
+                  result={result}
+                  fixedHeight={80}
+                />
+                <div className="border border-gray-300 bg-gray-200 rounded-lg p-3 md:p-4 text-center flex flex-col items-center justify-center" style={{ height: "80px" }}>
+                  <p className="text-xs font-medium text-gray-600">제반시설</p>
+                  <p className="text-xs text-gray-500">1,000평</p>
+                </div>
+              </div>
+
+              <p className="text-center text-[10px] text-gray-400 mt-2">MAIN GATE ▼</p>
             </div>
           </div>
 
@@ -376,45 +384,63 @@ function ResultItem({
 function LayoutBlock({
   label,
   modules,
-  area,
+  areaPy,
   color,
   selectedCropKey,
   cropKey,
   result,
-  tall,
+  heightModules,
+  maxModules,
+  fixedHeight,
 }: {
   label: string;
   modules: number;
-  area: string;
+  areaPy: number;
   color: string;
   selectedCropKey: string;
   cropKey: string;
   result: ReturnType<typeof calculateCrop> | null;
-  tall?: boolean;
+  heightModules?: number;
+  maxModules?: number;
+  fixedHeight?: number;
 }) {
   const isSelected = selectedCropKey === cropKey;
-  const userModules = result && isSelected ? result.displayModules : null;
-  const fillPercent = userModules !== null ? Math.min((userModules / modules) * 100, 100) : 0;
+  const userAreaPy = result && isSelected ? result.displayAreaPy : null;
+  const fillPercent = userAreaPy !== null ? Math.min((userAreaPy / areaPy) * 100, 100) : 0;
+  const unitLabel = cropKey === "salad" ? "모듈(단동)" : "모듈(연동)";
+
+  const style: React.CSSProperties = fixedHeight
+    ? { height: `${fixedHeight}px` }
+    : heightModules && maxModules
+      ? { height: `${Math.round((heightModules / maxModules) * 380)}px`, minHeight: "70px" }
+      : { minHeight: "80px" };
 
   return (
     <div
-      className={`relative border rounded-lg p-3 md:p-4 text-center overflow-hidden transition-all ${
+      className={`relative border rounded-lg p-2 md:p-3 text-center overflow-hidden transition-all flex flex-col items-center justify-center ${
         isSelected ? `${color} ring-2 ring-green-500` : `${color}`
-      } ${tall ? "min-h-[100px] md:min-h-[120px]" : "min-h-[80px] md:min-h-[100px]"}`}
+      }`}
+      style={style}
     >
+      {/* User area fill overlay */}
       {isSelected && fillPercent > 0 && (
         <div
-          className="absolute bottom-0 left-0 right-0 bg-green-500/20 transition-all duration-500"
+          className="absolute bottom-0 left-0 right-0 bg-green-500/25 border-t-2 border-green-500 transition-all duration-500"
           style={{ height: `${fillPercent}%` }}
         />
       )}
       <div className="relative z-10">
         <p className="text-xs md:text-sm font-semibold text-gray-800">{label}</p>
-        <p className="text-xs text-gray-600">{modules}{cropKey === "salad" ? "모듈(단동)" : "모듈(연동)"} / {area}</p>
-        {isSelected && userModules !== null && (
-          <p className="text-xs font-bold text-green-700 mt-1">
-            내 예상: {userModules.toFixed(1)}{cropKey === "salad" ? "모듈(단동)" : "모듈(연동)"}
-          </p>
+        <p className="text-[10px] md:text-xs text-gray-600">
+          {modules}{unitLabel} / {areaPy.toLocaleString()}평
+        </p>
+        {isSelected && userAreaPy !== null && (
+          <div className="mt-1 bg-white/80 rounded px-1.5 py-0.5 inline-block">
+            <p className="text-[10px] md:text-xs font-bold text-green-700">
+              내 예상: {userAreaPy.toLocaleString()}평
+              ({result!.displayModules.toFixed(1)}{unitLabel})
+            </p>
+          </div>
         )}
       </div>
     </div>
