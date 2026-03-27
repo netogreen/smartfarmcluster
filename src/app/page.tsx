@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WhyCluster from "@/components/WhyCluster";
 
 export default function Home() {
   return (
@@ -37,6 +38,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Why Cluster Section */}
+      <WhyCluster />
 
       {/* Summary Cards */}
       <section className="py-16 bg-white">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
+  { href: "/#why-cluster", label: "왜 클러스터인가" },
   { href: "/guide", label: "신청 안내" },
   { href: "/calculator", label: "기준 안내·계산" },
   { href: "/apply", label: "입주 희망 신청" },
