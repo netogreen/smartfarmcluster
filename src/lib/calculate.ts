@@ -52,10 +52,10 @@ export function calculateCrop(
 
 export function formatManWon(manWon: number): string {
   if (manWon >= 10000) {
-    const eok = Math.floor(manWon / 10000);
-    const rest = manWon % 10000;
-    if (rest === 0) return `${eok}억원`;
-    return `${eok}억 ${rest.toLocaleString()}만원`;
+    const eok = manWon / 10000;
+    const rounded = Math.round(eok * 10) / 10;
+    if (rounded === Math.floor(rounded)) return `${rounded}.0억원`;
+    return `${rounded}억원`;
   }
   return `${manWon.toLocaleString()}만원`;
 }
