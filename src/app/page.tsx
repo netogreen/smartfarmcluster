@@ -51,12 +51,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <SummaryCard
               title="과채 모듈 단가"
-              value="1모듈 2.52억원"
+              value="1모듈 2.42억원"
               desc="W8×L100×H6 연동 1동 = 242평 (토지+시설온실 포함)"
             />
             <SummaryCard
               title="샐러드 모듈 단가"
-              value="1모듈 4.0억원"
+              value="1모듈 4.04억원"
               desc="W10×L33×H6 단동 1동 = 100평 (토지+시설온실 포함)"
             />
             <SummaryCard
