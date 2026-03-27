@@ -90,9 +90,8 @@ export default function WhyCluster() {
             플랫폼입니다.
           </p>
           <p className="text-sm text-gray-500 leading-relaxed text-center mt-4">
-            즉, 클러스터는 후계농의 성공을 보장하는 모델이 아니라, 후계농이 보다
-            나은 조건에서 시작하고 운영할 수 있도록 지원과 시너지를 제공하는
-            환경에 가깝습니다.
+            클러스터는 후계농이 더 나은 조건에서 영농을 시작할 수 있도록,
+            시설·운영·유통을 하나의 구조 안에서 지원하는 환경입니다.
           </p>
         </div>
 
