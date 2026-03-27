@@ -1,12 +1,9 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="6" fill="#16a34a"/>
-  <path d="M4 18L10 10L16 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,255,255,0.2)"/>
-  <path d="M12 18L18 10L24 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,255,255,0.2)"/>
-  <line x1="3" y1="18" x2="25" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <rect x="5" y="20" width="6" height="4" rx="1" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
-  <rect x="13" y="20" width="6" height="4" rx="1" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
-  <rect x="5" y="25" width="6" height="4" rx="1" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
-  <rect x="13" y="25" width="6" height="4" rx="1" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="1"/>
-  <path d="M24 8C24 3 29 1 29 1C29 1 31 6 28 9C26.5 11 24 8 24 8Z" fill="white"/>
-  <path d="M29 1C27 4 25 7 24 8" stroke="rgba(22,163,74,0.4)" stroke-width="0.6" stroke-linecap="round"/>
+  <circle cx="16" cy="16" r="15" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <path d="M7 19L12 12L17 19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,255,255,0.2)"/>
+  <path d="M15 19L20 12L25 19" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255,255,255,0.2)"/>
+  <line x1="6" y1="19" x2="26" y2="19" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <rect x="9" y="21" width="4" height="2.5" rx="0.5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="0.8"/>
+  <rect x="14" y="21" width="4" height="2.5" rx="0.5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="0.8"/>
+  <rect x="19" y="21" width="4" height="2.5" rx="0.5" fill="rgba(255,255,255,0.3)" stroke="white" stroke-width="0.8"/>
 </svg>

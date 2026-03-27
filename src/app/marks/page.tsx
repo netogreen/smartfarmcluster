@@ -83,7 +83,7 @@ export default function MarksPage() {
               <rect x="13" y="30" width="5" height="3.5" rx="0.5" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1"/>
               <rect x="21" y="30" width="5" height="3.5" rx="0.5" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1"/>
               <rect x="29" y="30" width="5" height="3.5" rx="0.5" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1"/>
-              <text x="24" y="42" textAnchor="middle" fill="#16a34a" fontSize="6" fontWeight="700" fontFamily="sans-serif">CLUSTER</text>
+              <text x="24" y="38" textAnchor="middle" fill="#16a34a" fontSize="6" fontWeight="700" fontFamily="sans-serif">CLUSTER</text>
             </svg>
           </MarkCard>
 
