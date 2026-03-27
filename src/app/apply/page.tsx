@@ -60,7 +60,7 @@ export default function ApplyPage() {
       return;
     }
     if (!result) {
-      setError("정책자금 활용 예정규모를 올바르게 입력해주세요.");
+      setError("영농정착자금 활용 예정규모를 올바르게 입력해주세요.");
       return;
     }
 
@@ -230,10 +230,10 @@ export default function ApplyPage() {
             </FormField>
           </fieldset>
 
-          {/* 정책자금 및 계산 */}
+          {/* 영농정착자금 및 계산 */}
           <fieldset className="space-y-5">
             <legend className="text-lg font-bold text-gray-900 mb-2">
-              정책자금 활용 예정규모
+              영농정착자금 활용 예정규모
             </legend>
 
             <FormField label="예정규모" required hint="숫자 입력, 단위: 억원">

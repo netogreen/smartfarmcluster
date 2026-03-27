@@ -111,7 +111,7 @@ export default function CalculatorPage() {
             {/* 예산 입력 */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                정책자금 활용 예정규모
+                영농정착자금 활용 예정규모
               </label>
               <div className="flex items-center gap-3">
                 <input

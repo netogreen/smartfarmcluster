@@ -29,8 +29,8 @@ export default function GuidePage() {
               desc="스마트팜 시설 기반 영농을 계획하시는 분"
             />
             <TargetCard
-              title="정책자금 활용 예정자"
-              desc="정책자금을 활용해 시설 구축을 검토하시는 분"
+              title="영농정착자금 활용 예정자"
+              desc="영농정착자금을 활용해 시설 구축을 검토하시는 분"
             />
           </div>
         </div>
@@ -53,8 +53,8 @@ export default function GuidePage() {
             />
             <StepItem
               num="3"
-              title="정책자금 활용 예정규모 입력"
-              desc="활용 예정인 정책자금 규모를 억원 단위로 입력합니다."
+              title="영농정착자금 활용 예정규모 입력"
+              desc="활용 예정인 영농정착자금 규모를 억원 단위로 입력합니다."
             />
             <StepItem
               num="4"

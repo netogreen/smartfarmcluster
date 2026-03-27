@@ -30,7 +30,7 @@ export default function Home() {
             입주 희망 신청
           </h1>
           <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            희망 지역, 작목, 정책자금 활용 예정규모를 등록해두시면
+            희망 지역, 작목, 영농정착자금 활용 예정규모를 등록해두시면
             <br className="hidden md:block" />
             프로젝트 런칭 시 우선 공급안내를 드립니다.
             <br />
@@ -135,7 +135,7 @@ export default function Home() {
               step="1"
               icon={<ClipboardCheck className="w-5 h-5" />}
               title="입주 희망 신청"
-              items={["무료 · 비구속", "후계농 확정자 대상", "결제 없음"]}
+              items={["무료 신청", "후계농 확정자 대상", "결제 없음"]}
               highlight
             />
             <StepCard

@@ -22,8 +22,8 @@ export default function ProcessPage() {
             <TimelineStep
               num="1"
               title="입주 희망 신청 접수"
-              desc="희망 지역, 작목, 정책자금 활용 예정규모를 등록합니다."
-              note="비용 없음 · 비구속"
+              desc="희망 지역, 작목, 영농정착자금 활용 예정규모를 등록합니다."
+              note="무료 신청"
               active
             />
             <TimelineStep
@@ -60,7 +60,7 @@ export default function ProcessPage() {
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-lg font-bold text-gray-900 mb-6">참고 사항</h2>
           <div className="space-y-4">
-            <NoteCard text="입력하신 정책자금 활용 예정규모를 기준으로 예상 면적과 가계약금 예시가 안내됩니다." />
+            <NoteCard text="입력하신 영농정착자금 활용 예정규모를 기준으로 예상 면적과 가계약금 예시가 안내됩니다." />
             <NoteCard text="예상 모듈 수는 W8×L100×H6 연동 1동, 242평 기준으로 계산됩니다." />
             <NoteCard text="프로젝트 런칭 후 실제 공급 조건이 확정되면 별도 공급안내가 진행됩니다." />
             <NoteCard text="희망자에 한해 우선 가계약 절차가 안내됩니다." />
