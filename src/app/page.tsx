@@ -55,6 +55,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Cluster Layout Image */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-6">
+            <span className="inline-block bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full mb-3">
+              클러스터 구성 예시
+            </span>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+              10,000평 기준 작물별 배치 예시
+            </h2>
+            <p className="mt-2 text-sm text-gray-500">
+              5개 작목, 44모듈 규모의 스마트팜 클러스터 구성 예시입니다
+            </p>
+          </div>
+          <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+            <img
+              src="/cluster-layout.png"
+              alt="스마트팜 클러스터 10,000평 기준 작물별 배치 예시 - 파프리카 13모듈, 딸기 8모듈, 방울토마토 7모듈, 오이 6모듈, 샐러드 10모듈"
+              className="w-full h-auto"
+            />
+          </div>
+          <p className="text-xs text-gray-400 text-center mt-4">
+            위 배치도는 10,000평 기준 참고 예시입니다. 실제 배치와 공급 조건은 프로젝트별로 달라질 수 있습니다.
+          </p>
+        </div>
+      </section>
+
       {/* Why Cluster Section */}
       <WhyCluster />
 
@@ -75,13 +102,13 @@ export default function Home() {
               icon={<Sprout className="w-5 h-5 text-green-600" />}
               title="샐러드 모듈 단가"
               value="1모듈 4.04억원"
-              desc="W10×L33×H6 단동 1동 = 100평 (토지+시설온실 포함)"
+              desc="수직농장 30평 6단 2Unit 배치, 실 재배평수 360평 (토지+시설온실 포함)"
             />
             <SummaryCard
               icon={<Leaf className="w-5 h-5 text-green-600" />}
               title="대상 작물"
-              value="5개 작목"
-              desc="샐러드 · 딸기 · 파프리카 · 방울토마토 · 오이"
+              value="5개 작목 + 기타"
+              desc="샐러드 · 딸기 · 파프리카 · 방울토마토 · 오이 · 기타"
             />
             <SummaryCard
               icon={<FileSignature className="w-5 h-5 text-green-600" />}
