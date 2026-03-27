@@ -51,7 +51,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <SummaryCard
               title="기준 단가"
-              value="평당 100만원"
+              value="평당 100만원(토지+시설온실 포함)"
               desc="신청 편의를 위한 기준값입니다"
             />
             <SummaryCard

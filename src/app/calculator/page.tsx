@@ -18,7 +18,7 @@ export default function CalculatorPage() {
             기준 안내 및 예상 규모 계산
           </h1>
           <p className="mt-3 text-gray-600">
-            평당 100만원 기준으로 예상 가능 평수와 모듈 수를 안내합니다.
+            평당 100만원(토지+시설온실 포함) 기준으로 예상 가능 평수와 모듈 수를 안내합니다.
           </p>
         </div>
       </section>
@@ -30,7 +30,7 @@ export default function CalculatorPage() {
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 space-y-3">
             <InfoRow
               label="기준 단가"
-              value="평당 100만원"
+              value="평당 100만원(토지+시설온실 포함)"
             />
             <InfoRow
               label="1모듈 안내 기준"
