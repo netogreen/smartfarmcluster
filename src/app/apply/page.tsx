@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { calculate, formatManWon } from "@/lib/calculate";
+import { cropList, getCropByName } from "@/lib/cropModels";
+import { calculateCrop, formatManWon } from "@/lib/calculate";
 
 const REGIONS = ["경북", "경남", "전북", "전남", "기타"];
-const CROPS = ["샐러드", "딸기", "방울토마토", "오이", "파프리카", "기타"];
+const CROPS = [...cropList.map((c) => c.name), "기타"];
 const TIMINGS = [
   "2026년 하반기",
   "2027년 상반기",
@@ -36,8 +37,11 @@ export default function ApplyPage() {
   const [error, setError] = useState("");
 
   const budgetNum = parseFloat(form.budget);
+  const selectedCropModel = form.crop && form.crop !== "기타" ? getCropByName(form.crop) : null;
   const result =
-    !isNaN(budgetNum) && budgetNum > 0 ? calculate(budgetNum) : null;
+    selectedCropModel && !isNaN(budgetNum) && budgetNum > 0
+      ? calculateCrop(budgetNum, selectedCropModel)
+      : null;
 
   function updateForm(field: string, value: string | boolean) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -71,10 +75,10 @@ export default function ApplyPage() {
         region: form.region === "기타" ? form.regionOther : form.region,
         crop: form.crop === "기타" ? form.cropOther : form.crop,
         budget_eok: budgetNum,
-        estimated_area: result.estimatedArea,
-        estimated_modules: result.estimatedModules,
-        recommended_note: result.recommendedNote,
-        deposit_example: result.depositExample,
+        estimated_area: result ? result.displayAreaPy : budgetNum * 100,
+        estimated_modules: result ? result.displayModules : 0,
+        recommended_note: result ? `${result.displayModules.toFixed(1)}${selectedCropModel?.displayUnit || "모듈"}` : "별도 상담",
+        deposit_example: result ? result.depositManwon : Math.round(budgetNum * 100),
         timing: form.timing,
         wants_consultation: form.wantsConsultation === "예",
       };
@@ -247,34 +251,44 @@ export default function ApplyPage() {
               </div>
             </FormField>
 
-            {result && (
+            {!selectedCropModel && form.crop && form.crop !== "기타" && (
+              <p className="text-xs text-gray-400">작물을 선택하면 계산 결과가 표시됩니다.</p>
+            )}
+            {form.crop === "기타" && form.budget && (
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <p className="text-sm text-gray-600">
+                  기타 작물은 별도 상담을 통해 안내드립니다. 예산 {budgetNum}억원이 등록됩니다.
+                </p>
+              </div>
+            )}
+            {result && selectedCropModel && (
               <div className="bg-green-50 rounded-xl p-5 border border-green-100">
                 <h3 className="text-sm font-semibold text-green-800 mb-3">
-                  자동 계산 결과
+                  {selectedCropModel.name} 기준 자동 계산 결과
                 </h3>
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div>
-                    <p className="text-gray-500 text-xs">예상 가능 평수</p>
+                    <p className="text-gray-500 text-xs">적용 모듈 규격</p>
+                    <p className="font-semibold text-gray-900 text-xs">
+                      {selectedCropModel.sizeLabel} / {selectedCropModel.modulePy}평 / {selectedCropModel.spanType}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs">선택 작물 기준 예상 면적</p>
                     <p className="font-semibold text-gray-900">
-                      {result.estimatedArea.toLocaleString()}평
+                      약 {result.displayAreaPy.toLocaleString()}평
                     </p>
                   </div>
                   <div>
                     <p className="text-gray-500 text-xs">예상 모듈 수</p>
                     <p className="font-bold text-green-700">
-                      {result.estimatedModules.toFixed(1)}모듈(연동)
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500 text-xs">권장 신청 기준</p>
-                    <p className="font-semibold text-gray-900">
-                      {result.recommendedNote}
+                      {result.displayModules.toFixed(1)}{selectedCropModel.displayUnit}
                     </p>
                   </div>
                   <div>
                     <p className="text-gray-500 text-xs">우선 가계약금 예시</p>
                     <p className="font-semibold text-gray-900">
-                      {formatManWon(result.depositExample)}
+                      {formatManWon(result.depositManwon)}
                     </p>
                   </div>
                 </div>

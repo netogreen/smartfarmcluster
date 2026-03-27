@@ -1,37 +1,52 @@
-// 기준 모듈: W8xL100xH6 연동 1동 = 242평
-export const MODULE_AREA = 242; // 평
-export const PRICE_PER_PYEONG = 100; // 만원 (= 100만원/평)
+import { CropModel } from "./cropModels";
 
-export interface CalculationResult {
-  budgetWon: number; // 총 기준금액 (만원)
-  estimatedArea: number; // 예상 가능 평수
-  estimatedModules: number; // 예상 모듈 수 (소수점 1자리)
-  depositExample: number; // 우선 가계약금 예시 (만원, 1%)
-  recommendedNote: string; // 권장 신청 기준 설명
+export interface CropCalculationResult {
+  cropName: string;
+  sizeLabel: string;
+  spanType: string;
+  modulePy: number;
+  displayUnit: string;
+  budgetEok: number;
+  rawModules: number;
+  displayModules: number;
+  areaPy: number;
+  displayAreaPy: number;
+  depositManwon: number;
+  standardRatio: number;
+  referenceRatio: number;
+  referenceTotalModules: number;
+  standardPy: number;
 }
 
-export function calculate(budgetEok: number): CalculationResult {
-  const budgetManWon = budgetEok * 10000; // 억 → 만원
-  const estimatedArea = budgetManWon / PRICE_PER_PYEONG; // 평수
-  const rawModules = estimatedArea / MODULE_AREA;
-  const estimatedModules = Math.round(rawModules * 10) / 10; // 소수점 1자리 반올림
-  const depositExample = Math.round(budgetManWon * 0.01); // 1%
-
-  let recommendedNote: string;
-  if (rawModules >= 1 && rawModules < 1.5) {
-    recommendedNote = `약 ${Math.round(rawModules)}모듈(연동)`;
-  } else if (rawModules >= 1.5) {
-    recommendedNote = `약 ${Math.round(rawModules)}모듈(연동)`;
-  } else {
-    recommendedNote = "별도 상담";
-  }
+export function calculateCrop(
+  budgetEok: number,
+  crop: CropModel
+): CropCalculationResult {
+  const rawModules = budgetEok / crop.moduleCostEok;
+  const displayModules = Math.round(rawModules * 10) / 10;
+  const areaPy = rawModules * crop.modulePy;
+  const displayAreaPy = Math.round(areaPy * 10) / 10;
+  const depositManwon = Math.round(budgetEok * 100); // 1억 = 10000만, × 1% = 100만
+  const standardRatio = Math.round((areaPy / crop.standardPy) * 1000) / 10;
+  const referenceRatio =
+    Math.round((rawModules / crop.referenceTotalModules) * 1000) / 10;
 
   return {
-    budgetWon: budgetManWon,
-    estimatedArea,
-    estimatedModules,
-    depositExample,
-    recommendedNote,
+    cropName: crop.name,
+    sizeLabel: crop.sizeLabel,
+    spanType: crop.spanType,
+    modulePy: crop.modulePy,
+    displayUnit: crop.displayUnit,
+    budgetEok,
+    rawModules,
+    displayModules,
+    areaPy,
+    displayAreaPy,
+    depositManwon,
+    standardRatio,
+    referenceRatio,
+    referenceTotalModules: crop.referenceTotalModules,
+    standardPy: crop.standardPy,
   };
 }
 

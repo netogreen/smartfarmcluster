@@ -48,16 +48,21 @@ export default function Home() {
           <h2 className="text-xl font-bold text-gray-900 text-center mb-8">
             핵심 안내
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <SummaryCard
-              title="기준 단가"
-              value="평당 100만원(토지+시설온실 포함)"
-              desc="신청 편의를 위한 기준값입니다"
+              title="과채 모듈 단가"
+              value="1모듈 2.52억원"
+              desc="W8×L100×H6 연동 1동 = 242평 (토지+시설온실 포함)"
             />
             <SummaryCard
-              title="1모듈 기준"
-              value="약 250평"
-              desc="실제 기준 모듈: W8×L100×H6 연동 1동 = 242평"
+              title="샐러드 모듈 단가"
+              value="1모듈 4.0억원"
+              desc="W10×L33×H6 단동 1동 = 100평 (토지+시설온실 포함)"
+            />
+            <SummaryCard
+              title="대상 작물"
+              value="5개 작목"
+              desc="샐러드 · 딸기 · 파프리카 · 방울토마토 · 오이"
             />
             <SummaryCard
               title="가계약금 예시"
@@ -66,8 +71,8 @@ export default function Home() {
             />
           </div>
           <p className="text-xs text-gray-400 text-center mt-6">
-            본 금액과 면적은 신청 편의를 위한 기준값이며, 실제 공급 조건과
-            일정은 프로젝트별로 달라질 수 있습니다.
+            위 단가는 작물별 모듈 기준이며, 실제 공급 조건과 일정은
+            프로젝트별로 달라질 수 있습니다.
           </p>
         </div>
       </section>
