@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ChannelTalk from "@/components/ChannelTalk";
 
 export const metadata: Metadata = {
   title: "스마트팜 클러스터 입주 희망 신청",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ChannelTalk />
       </body>
     </html>
   );
