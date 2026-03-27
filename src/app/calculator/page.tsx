@@ -23,7 +23,7 @@ export default function CalculatorPage() {
       <section className="bg-green-50 py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-            기준 안내 및 예상 규모 계산
+            모듈 계산기
           </h1>
           <p className="mt-3 text-gray-600">
             작물별 모듈 단가 기준으로 예상 가능 평수와 모듈 수를 안내합니다.
@@ -31,7 +31,7 @@ export default function CalculatorPage() {
         </div>
       </section>
 
-      {/* 작물별 기준 안내 */}
+      {/* 작물별 모듈 기준 */}
       <section className="py-12 bg-white">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-lg font-bold text-gray-900 mb-6">

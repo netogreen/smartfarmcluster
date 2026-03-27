@@ -5,9 +5,9 @@ import { useState } from "react";
 import { ServiceMarkCompact } from "./ServiceMark";
 
 const navItems = [
-  { href: "/#why-cluster", label: "왜 클러스터인가" },
-  { href: "/guide", label: "신청 안내" },
-  { href: "/calculator", label: "기준 안내·계산" },
+  { href: "/#why-cluster", label: "클러스터 안내" },
+  { href: "/guide", label: "신청 방법" },
+  { href: "/calculator", label: "모듈 계산기" },
   { href: "/apply", label: "입주 희망 신청" },
   { href: "/process", label: "가계약 안내" },
   { href: "/faq", label: "FAQ" },

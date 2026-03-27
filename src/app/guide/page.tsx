@@ -10,7 +10,7 @@ export default function GuidePage() {
             신청 대상 및 신청 방법
           </h1>
           <p className="mt-3 text-gray-600">
-            후계농 확정자 대상 스마트팜 클러스터 입주 희망 신청 안내입니다.
+            후계농 확정자 대상 스마트팜 클러스터 입주 희망 신청 방법입니다.
           </p>
         </div>
       </section>
