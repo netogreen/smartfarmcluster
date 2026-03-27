@@ -1,5 +1,16 @@
 import Link from "next/link";
 import WhyCluster from "@/components/WhyCluster";
+import ServiceMark from "@/components/ServiceMark";
+import {
+  Warehouse,
+  Leaf,
+  ClipboardCheck,
+  Send,
+  FileCheck,
+  FileSignature,
+  Sprout,
+  LayoutGrid,
+} from "lucide-react";
 
 export default function Home() {
   return (
@@ -7,6 +18,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-green-50 to-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="flex justify-center mb-6">
+            <ServiceMark size={48} />
+          </div>
           <div className="inline-block bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full mb-6">
             후계농 확정자 대상
           </div>
@@ -25,14 +39,16 @@ export default function Home() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/apply"
-              className="inline-flex items-center justify-center px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors text-base"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors text-base"
             >
+              <ClipboardCheck className="w-5 h-5" />
               입주 희망 신청하기
             </Link>
             <Link
               href="/process"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-green-700 font-semibold rounded-xl border-2 border-green-200 hover:border-green-300 hover:bg-green-50 transition-colors text-base"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-green-700 font-semibold rounded-xl border-2 border-green-200 hover:border-green-300 hover:bg-green-50 transition-colors text-base"
             >
+              <FileCheck className="w-5 h-5" />
               가계약 방식 보기
             </Link>
           </div>
@@ -50,21 +66,25 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <SummaryCard
+              icon={<Warehouse className="w-5 h-5 text-green-600" />}
               title="과채 모듈 단가"
               value="1모듈 2.42억원"
               desc="W8×L100×H6 연동 1동 = 242평 (토지+시설온실 포함)"
             />
             <SummaryCard
+              icon={<Sprout className="w-5 h-5 text-green-600" />}
               title="샐러드 모듈 단가"
               value="1모듈 4.04억원"
               desc="W10×L33×H6 단동 1동 = 100평 (토지+시설온실 포함)"
             />
             <SummaryCard
+              icon={<Leaf className="w-5 h-5 text-green-600" />}
               title="대상 작물"
               value="5개 작목"
               desc="샐러드 · 딸기 · 파프리카 · 방울토마토 · 오이"
             />
             <SummaryCard
+              icon={<FileSignature className="w-5 h-5 text-green-600" />}
               title="가계약금 예시"
               value="총 기준금액의 1%"
               desc="프로젝트 런칭 후 별도 안내"
@@ -86,12 +106,14 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <StepCard
               step="1"
+              icon={<ClipboardCheck className="w-5 h-5" />}
               title="입주 희망 신청"
               items={["무료 · 비구속", "후계농 확정자 대상", "결제 없음"]}
               highlight
             />
             <StepCard
               step="2"
+              icon={<Send className="w-5 h-5" />}
               title="공급안내"
               items={[
                 "프로젝트 런칭 시",
@@ -101,6 +123,7 @@ export default function Home() {
             />
             <StepCard
               step="3"
+              icon={<FileSignature className="w-5 h-5" />}
               title="우선 가계약"
               items={[
                 "희망자 대상",
@@ -110,6 +133,7 @@ export default function Home() {
             />
             <StepCard
               step="4"
+              icon={<FileCheck className="w-5 h-5" />}
               title="본계약"
               items={["별도 안내", "개별 절차 진행"]}
             />
@@ -130,8 +154,9 @@ export default function Home() {
           </p>
           <Link
             href="/apply"
-            className="inline-flex items-center justify-center px-10 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors text-base"
+            className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors text-base"
           >
+            <ClipboardCheck className="w-5 h-5" />
             입주 희망 신청하기
           </Link>
         </div>
@@ -141,17 +166,22 @@ export default function Home() {
 }
 
 function SummaryCard({
+  icon,
   title,
   value,
   desc,
 }: {
+  icon: React.ReactNode;
   title: string;
   value: string;
   desc: string;
 }) {
   return (
     <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-      <p className="text-sm text-gray-500 mb-1">{title}</p>
+      <div className="flex items-center gap-2 mb-2">
+        {icon}
+        <p className="text-sm text-gray-500">{title}</p>
+      </div>
       <p className="text-xl font-bold text-green-700">{value}</p>
       <p className="text-xs text-gray-400 mt-2">{desc}</p>
     </div>
@@ -160,11 +190,13 @@ function SummaryCard({
 
 function StepCard({
   step,
+  icon,
   title,
   items,
   highlight,
 }: {
   step: string;
+  icon: React.ReactNode;
   title: string;
   items: string[];
   highlight?: boolean;
@@ -177,14 +209,19 @@ function StepCard({
           : "bg-white border-gray-100"
       }`}
     >
-      <div
-        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-3 ${
-          highlight
-            ? "bg-green-600 text-white"
-            : "bg-gray-200 text-gray-600"
-        }`}
-      >
-        {step}
+      <div className="flex items-center gap-2 mb-3">
+        <div
+          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+            highlight
+              ? "bg-green-600 text-white"
+              : "bg-gray-200 text-gray-600"
+          }`}
+        >
+          {step}
+        </div>
+        <div className={highlight ? "text-green-600" : "text-gray-400"}>
+          {icon}
+        </div>
       </div>
       <h3 className="font-semibold text-gray-900 mb-2">{title}</h3>
       <ul className="space-y-1">

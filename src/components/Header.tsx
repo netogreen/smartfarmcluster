@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ServiceMarkCompact } from "./ServiceMark";
 
 const navItems = [
   { href: "/#why-cluster", label: "왜 클러스터인가" },
@@ -19,9 +20,7 @@ export default function Header() {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">SF</span>
-          </div>
+          <ServiceMarkCompact size={32} />
           <span className="font-semibold text-gray-900 text-sm md:text-base">
             스마트팜 클러스터 입주 신청
           </span>

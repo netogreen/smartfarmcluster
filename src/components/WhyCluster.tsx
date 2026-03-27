@@ -1,5 +1,20 @@
 "use client";
 
+import {
+  MapPin,
+  Warehouse,
+  TrendingUp,
+  BookOpen,
+  Truck,
+  Wrench,
+  Home,
+  Users,
+} from "lucide-react";
+
+const problemIconComponents = [
+  MapPin, Warehouse, TrendingUp, BookOpen, Truck, Wrench, Home, Users,
+];
+
 const problems = [
   {
     problem: "농지 확보가 어렵고, 단독 부지 매입 부담이 큼",
@@ -43,7 +58,7 @@ const problems = [
   },
 ];
 
-const problemIcons = ["🌾", "🏗️", "📊", "📋", "🚚", "🔧", "🏠", "🤝"];
+// Icons rendered from lucide-react components
 
 export default function WhyCluster() {
   return (
@@ -111,8 +126,8 @@ export default function WhyCluster() {
                     }`}
                   >
                     <div className="flex gap-3 items-start">
-                      <span className="text-lg flex-shrink-0 mt-0.5">
-                        {problemIcons[i]}
+                      <span className="flex-shrink-0 mt-0.5 text-green-600">
+                        {(() => { const Icon = problemIconComponents[i]; return <Icon className="w-4 h-4" />; })()}
                       </span>
                       <p className="text-sm text-gray-700 leading-relaxed">
                         {item.problem}
@@ -142,8 +157,8 @@ export default function WhyCluster() {
               >
                 <div className="bg-gray-50 px-4 py-3">
                   <div className="flex gap-2 items-start">
-                    <span className="text-base flex-shrink-0">
-                      {problemIcons[i]}
+                    <span className="flex-shrink-0 text-green-600 mt-0.5">
+                      {(() => { const Icon = problemIconComponents[i]; return <Icon className="w-4 h-4" />; })()}
                     </span>
                     <div>
                       <p className="text-xs text-gray-400 mb-0.5">문제</p>
