@@ -43,8 +43,10 @@ export default function MarksPage() {
               <rect x="17" y="37" width="7" height="5" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5"/>
               <rect x="26" y="37" width="7" height="5" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5"/>
               <rect x="35" y="37" width="7" height="5" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5"/>
-              <path d="M38 8C38 8 42 4 44 6C46 8 42 12 42 12C42 12 38 14 38 8Z" fill="#16a34a"/>
-              <path d="M38 8C40 10 42 12 42 12" stroke="#dcfce7" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M37 12C37 6 43 4 43 4C43 4 45 10 41 14C39 16 37 12 37 12Z" fill="#16a34a"/>
+              <path d="M43 4C40 8 38 11 37 12" stroke="#dcfce7" strokeWidth="0.8" strokeLinecap="round"/>
+              <path d="M40 7L39 9" stroke="#dcfce7" strokeWidth="0.5" strokeLinecap="round"/>
+              <path d="M42 7L40.5 10" stroke="#dcfce7" strokeWidth="0.5" strokeLinecap="round"/>
             </svg>
           </MarkCard>
 
@@ -97,8 +99,10 @@ export default function MarksPage() {
               <rect x="6" y="28" width="16" height="12" rx="2" fill="#bbf7d0" stroke="#16a34a" strokeWidth="2"/>
               <rect x="24" y="14" width="16" height="12" rx="2" fill="#bbf7d0" stroke="#16a34a" strokeWidth="2"/>
               <rect x="24" y="28" width="16" height="12" rx="2" fill="#dcfce7" stroke="#16a34a" strokeWidth="2"/>
-              <path d="M34 4C34 4 40 2 42 5C44 8 38 12 38 12C38 12 32 13 34 4Z" fill="#16a34a"/>
-              <path d="M34 4C36 7 38 12 38 12" stroke="#f0fdf4" strokeWidth="1" strokeLinecap="round"/>
+              <path d="M33 10C33 4 39 2 39 2C39 2 41 8 37 12C35 14 33 10 33 10Z" fill="#16a34a"/>
+              <path d="M39 2C36 6 34 9 33 10" stroke="#f0fdf4" strokeWidth="0.8" strokeLinecap="round"/>
+              <path d="M36 5L35 7" stroke="#f0fdf4" strokeWidth="0.5" strokeLinecap="round"/>
+              <path d="M38 5L36.5 8" stroke="#f0fdf4" strokeWidth="0.5" strokeLinecap="round"/>
               <circle cx="14" cy="20" r="1.5" fill="#16a34a" opacity="0.3"/>
               <circle cx="14" cy="34" r="1.5" fill="#16a34a" opacity="0.3"/>
               <circle cx="32" cy="20" r="1.5" fill="#16a34a" opacity="0.3"/>
@@ -121,7 +125,8 @@ export default function MarksPage() {
               <line x1="4" y1="36" x2="44" y2="36" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round"/>
               <rect x="18" y="24" width="12" height="12" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5"/>
               <line x1="24" y1="24" x2="24" y2="36" stroke="#16a34a" strokeWidth="1" opacity="0.5"/>
-              <path d="M21 8C21 8 23 4 26 5C29 6 27 10 27 10" fill="#16a34a" opacity="0.8"/>
+              <path d="M22 10C22 5 27 3 27 3C27 3 29 8 26 11C24.5 13 22 10 22 10Z" fill="#16a34a" opacity="0.8"/>
+              <path d="M27 3C25 6 23 9 22 10" stroke="#dcfce7" strokeWidth="0.6" strokeLinecap="round"/>
               <line x1="14" y1="36" x2="14" y2="18" stroke="#16a34a" strokeWidth="1" opacity="0.2"/>
               <line x1="34" y1="36" x2="34" y2="18" stroke="#16a34a" strokeWidth="1" opacity="0.2"/>
             </svg>

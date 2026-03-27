@@ -61,15 +61,17 @@ export default function ServiceMark({
       <rect x="35" y="37" width="7" height="5" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5" />
       {/* Leaf accent */}
       <path
-        d="M38 8C38 8 42 4 44 6C46 8 42 12 42 12C42 12 38 14 38 8Z"
+        d="M37 12C37 6 43 4 43 4C43 4 45 10 41 14C39 16 37 12 37 12Z"
         fill="#16a34a"
       />
       <path
-        d="M38 8C40 10 42 12 42 12"
+        d="M43 4C40 8 38 11 37 12"
         stroke="#dcfce7"
-        strokeWidth="1"
+        strokeWidth="0.8"
         strokeLinecap="round"
       />
+      <path d="M40 7L39 9" stroke="#dcfce7" strokeWidth="0.5" strokeLinecap="round" />
+      <path d="M42 7L40.5 10" stroke="#dcfce7" strokeWidth="0.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -117,9 +119,10 @@ export function ServiceMarkCompact({
       <rect x="13" y="26" width="7" height="4" rx="1" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.2" />
       {/* Leaf */}
       <path
-        d="M25 5C25 5 28 2 30 4C32 6 28 9 28 9C28 9 25 10 25 5Z"
+        d="M24 8C24 3 29 1 29 1C29 1 31 6 28 9C26.5 11 24 8 24 8Z"
         fill="#16a34a"
       />
+      <path d="M29 1C27 4 25 7 24 8" stroke="#dcfce7" strokeWidth="0.6" strokeLinecap="round" />
     </svg>
   );
 }
