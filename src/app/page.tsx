@@ -95,13 +95,13 @@ export default function Home() {
             <SummaryCard
               icon={<Warehouse className="w-5 h-5 text-green-600" />}
               title="과채 모듈 단가"
-              value="1모듈 2.42억원"
+              value="1모듈 2.4억원"
               desc="W8×L100×H6 연동 1동 = 242평 (토지+시설온실 포함)"
             />
             <SummaryCard
               icon={<Sprout className="w-5 h-5 text-green-600" />}
               title="샐러드 모듈 단가"
-              value="1모듈 4.04억원"
+              value="1모듈 4.0억원"
               desc="수직농장 30평 6단 2Unit 배치, 실 재배평수 360평 (토지+시설온실 포함)"
             />
             <SummaryCard
