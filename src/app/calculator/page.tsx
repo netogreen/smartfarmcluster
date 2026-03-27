@@ -55,7 +55,7 @@ export default function CalculatorPage() {
                     <td className="px-4 py-3 text-gray-600 text-xs">{crop.sizeLabel}</td>
                     <td className="px-4 py-3 text-gray-600">{crop.spanType}</td>
                     <td className="px-4 py-3 text-right text-gray-900">{crop.modulePy}평</td>
-                    <td className="px-4 py-3 text-right font-semibold text-green-700">{crop.moduleCostEok}억원</td>
+                    <td className="px-4 py-3 text-right font-semibold text-green-700">{crop.moduleCostEok.toFixed(1)}억원</td>
                   </tr>
                 ))}
               </tbody>
@@ -103,7 +103,7 @@ export default function CalculatorPage() {
               <div className="mb-6 bg-gray-50 rounded-xl p-4 border border-gray-100">
                 <p className="text-xs text-gray-500 mb-1">선택된 작물 기준</p>
                 <p className="text-sm font-medium text-gray-900">
-                  {selectedCrop.name} · {selectedCrop.sizeLabel} · {selectedCrop.modulePy}평 · {selectedCrop.spanType} · 1모듈 {selectedCrop.moduleCostEok}억원
+                  {selectedCrop.name} · {selectedCrop.sizeLabel} · {selectedCrop.modulePy}평 · {selectedCrop.spanType} · 1모듈 {selectedCrop.moduleCostEok.toFixed(1)}억원
                 </p>
               </div>
             )}
@@ -142,7 +142,7 @@ export default function CalculatorPage() {
                     label="적용 모듈 규격"
                     value={`${result.sizeLabel} / ${result.modulePy}평 / ${result.spanType}`}
                   />
-                  <ResultItem label="입력 예산" value={`${result.budgetEok}억원`} />
+                  <ResultItem label="입력 예산" value={`${result.budgetEok.toFixed(1)}억원`} />
                   <ResultItem
                     label="예상 모듈 수"
                     value={`${result.displayModules.toFixed(1)}${selectedCrop!.displayUnit}`}
@@ -201,7 +201,7 @@ export default function CalculatorPage() {
                     return (
                       <tr key={cropKey} className="border-t border-gray-100">
                         <td className="px-3 py-3 font-medium">{crop.name}</td>
-                        <td className="px-3 py-3 text-right">{b}억원</td>
+                        <td className="px-3 py-3 text-right">{b.toFixed(1)}억원</td>
                         <td className="px-3 py-3 text-right text-green-700 font-semibold">
                           {r.displayModules.toFixed(1)}{crop.displayUnit}
                         </td>

@@ -25,7 +25,7 @@ export function calculateCrop(
   const rawModules = budgetEok / crop.moduleCostEok;
   const displayModules = Math.round(rawModules * 10) / 10;
   const areaPy = rawModules * crop.modulePy;
-  const displayAreaPy = Math.round(areaPy * 10) / 10;
+  const displayAreaPy = Math.round(areaPy);
   const depositManwon = Math.round(budgetEok * 100); // 1억 = 10000만, × 1% = 100만
   const standardRatio = Math.round((areaPy / crop.standardPy) * 1000) / 10;
   const referenceRatio =
