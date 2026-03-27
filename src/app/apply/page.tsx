@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { cropList, getCropByName } from "@/lib/cropModels";
 import { calculateCrop, formatManWon } from "@/lib/calculate";
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
 
 const REGIONS = ["경북", "경남", "전북", "전남", "기타"];
 const CROPS = [...cropList.map((c) => c.name), "기타"];
@@ -35,6 +41,16 @@ export default function ApplyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  // ViewContent 이벤트 - 신청 페이지 진입 시
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "ViewContent", {
+        content_name: "입주 희망 신청 폼",
+        content_category: "smartfarm-cluster",
+      });
+    }
+  }, []);
 
   const budgetNum = parseFloat(form.budget);
   const selectedCropModel = form.crop && form.crop !== "기타" ? getCropByName(form.crop) : null;
@@ -90,6 +106,38 @@ export default function ApplyPage() {
       });
 
       if (!res.ok) throw new Error("신청 제출 중 오류가 발생했습니다.");
+
+      // Lead 이벤트 - 프론트 + 서버 동일 event_id로 중복 제거
+      const eventId = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+      const eventTime = Math.floor(Date.now() / 1000);
+
+      // 프론트: fbq Lead
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "Lead", { event_id: eventId });
+      }
+
+      // 서버: Conversions API Lead
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_name: "Lead",
+          event_id: eventId,
+          event_time: eventTime,
+          event_source_url: window.location.href,
+          user_data: {
+            ph: form.phone ? [form.phone.replace(/[^0-9]/g, "")] : undefined,
+            em: form.email ? [form.email.toLowerCase()] : undefined,
+          },
+          custom_data: {
+            content_name: "입주 희망 신청",
+            content_category: form.crop,
+            value: budgetNum,
+            currency: "KRW",
+          },
+        }),
+      }).catch(() => {});
+
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "오류가 발생했습니다.");
