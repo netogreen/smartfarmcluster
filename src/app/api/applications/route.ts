@@ -51,9 +51,11 @@ export async function POST(req: NextRequest) {
       wants_consultation: Boolean(body.wants_consultation),
     });
 
-    // SMS 발송 (응답 지연 방지를 위해 비동기 처리)
-    sendApplicantSMS(body.phone, body.name).catch(() => {});
-    sendAdminSMS(body.name, body.phone, body.region, body.crop).catch(() => {});
+    // SMS 발송 (Vercel 서버리스에서는 await 필요)
+    await Promise.all([
+      sendApplicantSMS(body.phone, body.name),
+      sendAdminSMS(body.name, body.phone, body.region, body.crop),
+    ]);
 
     return NextResponse.json({ success: true, id: app.id }, { status: 201 });
   } catch (err) {
