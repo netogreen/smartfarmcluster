@@ -30,6 +30,12 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <a
+          href="tel:01082578007"
+          className="fixed bottom-6 right-6 z-50 bg-green-700 text-white px-5 py-3 rounded-full font-bold shadow-lg hover:bg-green-800 transition-colors"
+        >
+          📞 전화 문의
+        </a>
         <ChannelTalk />
         <MetaPixel />
       </body>
