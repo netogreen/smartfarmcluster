@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addApplication, getApplications, updateApplicationStatus } from "@/lib/db";
+import { sendApplicantSMS, sendAdminSMS } from "@/lib/sms";
 
 export async function GET(req: NextRequest) {
   const adminKey = req.nextUrl.searchParams.get("key");
@@ -49,6 +50,10 @@ export async function POST(req: NextRequest) {
       timing: body.timing,
       wants_consultation: Boolean(body.wants_consultation),
     });
+
+    // SMS 발송 (응답 지연 방지를 위해 비동기 처리)
+    sendApplicantSMS(body.phone, body.name).catch(() => {});
+    sendAdminSMS(body.name, body.phone, body.region, body.crop).catch(() => {});
 
     return NextResponse.json({ success: true, id: app.id }, { status: 201 });
   } catch (err) {
