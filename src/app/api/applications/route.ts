@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     // SMS 발송 (Vercel 서버리스에서는 await 필요)
     await Promise.all([
       sendApplicantSMS(body.phone, body.name),
-      sendAdminSMS(body.name, body.phone, body.region, body.crop),
+      sendAdminSMS(body.name, body.phone, body.region, body.crop, Number(body.budget_eok)),
     ]);
 
     return NextResponse.json({ success: true, id: app.id }, { status: 201 });
