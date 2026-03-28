@@ -75,7 +75,11 @@ export default function ApplyPage() {
       setError("모든 동의 항목에 체크해주세요.");
       return;
     }
-    if (!result) {
+    if (!result && form.crop !== "기타") {
+      setError("영농정착자금 활용 예정규모를 올바르게 입력해주세요.");
+      return;
+    }
+    if (form.crop === "기타" && (!budgetNum || budgetNum <= 0)) {
       setError("영농정착자금 활용 예정규모를 올바르게 입력해주세요.");
       return;
     }
