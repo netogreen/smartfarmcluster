@@ -97,3 +97,16 @@ export async function updateApplicationStatus(
   writeFileSync(DB_PATH, JSON.stringify(apps, null, 2), "utf-8");
   return apps[idx];
 }
+
+export async function deleteApplication(id: string): Promise<boolean> {
+  if (isSupabaseConfigured() && supabase) {
+    const { error } = await supabase.from("applications").delete().eq("id", id);
+    return !error;
+  }
+
+  const apps = ensureLocalDb();
+  const filtered = apps.filter((a) => a.id !== id);
+  if (filtered.length === apps.length) return false;
+  writeFileSync(DB_PATH, JSON.stringify(filtered, null, 2), "utf-8");
+  return true;
+}

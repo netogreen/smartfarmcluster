@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addApplication, getApplications, updateApplicationStatus } from "@/lib/db";
+import { addApplication, getApplications, updateApplicationStatus, deleteApplication } from "@/lib/db";
 import { sendApplicantSMS, sendAdminSMS } from "@/lib/sms";
 
 export async function GET(req: NextRequest) {
@@ -75,6 +75,24 @@ export async function PATCH(req: NextRequest) {
   try {
     const { id, status } = await req.json();
     const result = await updateApplicationStatus(id, status);
+    if (!result) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "서버 오류" }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const adminKey = req.nextUrl.searchParams.get("key");
+  if (adminKey !== process.env.ADMIN_KEY && adminKey !== "cluster2026") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const { id } = await req.json();
+    const result = await deleteApplication(id);
     if (!result) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

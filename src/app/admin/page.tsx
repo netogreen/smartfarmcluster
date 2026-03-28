@@ -49,6 +49,16 @@ export default function AdminPage() {
     fetchApps();
   }
 
+  async function deleteApp(id: string, name: string) {
+    if (!confirm(`"${name}" 신청을 삭제하시겠습니까?`)) return;
+    await fetch(`/api/applications?key=${ADMIN_KEY}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    fetchApps();
+  }
+
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     if (password === ADMIN_KEY) {
@@ -284,18 +294,21 @@ export default function AdminPage() {
                   <th className="px-4 py-3 text-left font-medium text-gray-600">
                     등록일
                   </th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-600">
+                    삭제
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={11} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={12} className="px-4 py-8 text-center text-gray-500">
                       불러오는 중...
                     </td>
                   </tr>
                 ) : filteredApps.length === 0 ? (
                   <tr>
-                    <td colSpan={11} className="px-4 py-8 text-center text-gray-400">
+                    <td colSpan={12} className="px-4 py-8 text-center text-gray-400">
                       신청자가 없습니다.
                     </td>
                   </tr>
@@ -335,6 +348,14 @@ export default function AdminPage() {
                       </td>
                       <td className="px-4 py-3 text-xs text-gray-400">
                         {new Date(app.created_at).toLocaleDateString("ko-KR")}
+                      </td>
+                      <td className="px-4 py-3">
+                        <button
+                          onClick={() => deleteApp(app.id, app.name)}
+                          className="text-xs text-red-500 hover:text-red-700"
+                        >
+                          삭제
+                        </button>
                       </td>
                     </tr>
                   ))
