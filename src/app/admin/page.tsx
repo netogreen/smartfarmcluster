@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [apps, setApps] = useState<Application[]>([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({ region: "", crop: "", status: "" });
+  const [selected, setSelected] = useState<Set<string>>(new Set());
 
   const fetchApps = useCallback(async () => {
     setLoading(true);
@@ -51,12 +52,43 @@ export default function AdminPage() {
 
   async function deleteApp(id: string, name: string) {
     if (!confirm(`"${name}" 신청을 삭제하시겠습니까?`)) return;
-    await fetch(`/api/applications?key=${ADMIN_KEY}`, {
+    const res = await fetch(`/api/applications?key=${ADMIN_KEY}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
+    if (!res.ok) alert("삭제에 실패했습니다. Supabase RLS 정책을 확인해주세요.");
+    setSelected((prev) => { const next = new Set(prev); next.delete(id); return next; });
     fetchApps();
+  }
+
+  async function deleteSelected() {
+    if (selected.size === 0) return;
+    if (!confirm(`선택된 ${selected.size}건을 삭제하시겠습니까?`)) return;
+    const res = await fetch(`/api/applications?key=${ADMIN_KEY}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids: Array.from(selected) }),
+    });
+    if (!res.ok) alert("삭제에 실패했습니다. Supabase RLS 정책을 확인해주세요.");
+    setSelected(new Set());
+    fetchApps();
+  }
+
+  function toggleSelect(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleSelectAll() {
+    if (selected.size === filteredApps.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(filteredApps.map((a) => a.id)));
+    }
   }
 
   function handleLogin(e: React.FormEvent) {
@@ -255,12 +287,39 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {/* 선택 삭제 */}
+        {selected.size > 0 && (
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-sm text-gray-600">{selected.size}건 선택됨</span>
+            <button
+              onClick={deleteSelected}
+              className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"
+            >
+              선택 삭제
+            </button>
+            <button
+              onClick={() => setSelected(new Set())}
+              className="px-4 py-2 bg-white border border-gray-300 text-sm rounded-lg hover:bg-gray-50"
+            >
+              선택 해제
+            </button>
+          </div>
+        )}
+
         {/* 신청자 목록 */}
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
+                  <th className="px-4 py-3">
+                    <input
+                      type="checkbox"
+                      checked={filteredApps.length > 0 && selected.size === filteredApps.length}
+                      onChange={toggleSelectAll}
+                      className="w-4 h-4 rounded border-gray-300 text-green-600"
+                    />
+                  </th>
                   <th className="px-4 py-3 text-left font-medium text-gray-600">
                     이름
                   </th>
@@ -302,13 +361,13 @@ export default function AdminPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={12} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={13} className="px-4 py-8 text-center text-gray-500">
                       불러오는 중...
                     </td>
                   </tr>
                 ) : filteredApps.length === 0 ? (
                   <tr>
-                    <td colSpan={12} className="px-4 py-8 text-center text-gray-400">
+                    <td colSpan={13} className="px-4 py-8 text-center text-gray-400">
                       신청자가 없습니다.
                     </td>
                   </tr>
@@ -318,6 +377,14 @@ export default function AdminPage() {
                       key={app.id}
                       className="border-b border-gray-100 hover:bg-gray-50"
                     >
+                      <td className="px-4 py-3">
+                        <input
+                          type="checkbox"
+                          checked={selected.has(app.id)}
+                          onChange={() => toggleSelect(app.id)}
+                          className="w-4 h-4 rounded border-gray-300 text-green-600"
+                        />
+                      </td>
                       <td className="px-4 py-3 font-medium">{app.name}</td>
                       <td className="px-4 py-3">{app.phone}</td>
                       <td className="px-4 py-3">{app.is_successor_farmer}</td>

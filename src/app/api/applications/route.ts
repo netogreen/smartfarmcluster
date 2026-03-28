@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addApplication, getApplications, updateApplicationStatus, deleteApplication } from "@/lib/db";
+import { addApplication, getApplications, updateApplicationStatus, deleteApplication, deleteApplications } from "@/lib/db";
 import { sendApplicantSMS, sendAdminSMS } from "@/lib/sms";
 
 export async function GET(req: NextRequest) {
@@ -91,8 +91,16 @@ export async function DELETE(req: NextRequest) {
   }
 
   try {
-    const { id } = await req.json();
-    const result = await deleteApplication(id);
+    const body = await req.json();
+    // 일괄 삭제 (ids 배열) 또는 단건 삭제 (id)
+    if (body.ids && Array.isArray(body.ids)) {
+      const result = await deleteApplications(body.ids);
+      if (!result) {
+        return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
+      }
+      return NextResponse.json({ success: true, deleted: body.ids.length });
+    }
+    const result = await deleteApplication(body.id);
     if (!result) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }

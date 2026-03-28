@@ -101,12 +101,26 @@ export async function updateApplicationStatus(
 export async function deleteApplication(id: string): Promise<boolean> {
   if (isSupabaseConfigured() && supabase) {
     const { error } = await supabase.from("applications").delete().eq("id", id);
+    if (error) console.error("[DB] 삭제 실패:", error.message);
     return !error;
   }
 
   const apps = ensureLocalDb();
   const filtered = apps.filter((a) => a.id !== id);
   if (filtered.length === apps.length) return false;
+  writeFileSync(DB_PATH, JSON.stringify(filtered, null, 2), "utf-8");
+  return true;
+}
+
+export async function deleteApplications(ids: string[]): Promise<boolean> {
+  if (isSupabaseConfigured() && supabase) {
+    const { error } = await supabase.from("applications").delete().in("id", ids);
+    if (error) console.error("[DB] 일괄 삭제 실패:", error.message);
+    return !error;
+  }
+
+  const apps = ensureLocalDb();
+  const filtered = apps.filter((a) => !ids.includes(a.id));
   writeFileSync(DB_PATH, JSON.stringify(filtered, null, 2), "utf-8");
   return true;
 }
