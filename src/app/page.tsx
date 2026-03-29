@@ -70,15 +70,39 @@ export default function Home() {
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-            <img
-              src="/cluster-layout.png"
-              alt="스마트팜 클러스터 10,000평 기준 작물별 배치 예시 - 파프리카 13모듈, 딸기 8모듈, 방울토마토 7모듈, 오이 6모듈, 샐러드 10모듈"
+            <video
+              src="/cluster.mp4"
+              poster="/cluster-layout.png"
+              autoPlay
+              muted
+              loop
+              playsInline
               className="w-full h-auto"
             />
           </div>
           <p className="text-xs text-gray-400 text-center mt-4">
             위 배치도는 10,000평 기준 참고 예시입니다. 실제 배치와 공급 조건은 프로젝트별로 달라질 수 있습니다.
           </p>
+        </div>
+      </section>
+
+      {/* Crop Videos Section */}
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <span className="inline-block bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full mb-3">
+              작목별 재배 환경
+            </span>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+              작목별 재배 환경
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <CropVideoCard video="/strawberry.mp4" name="딸기" desc="연동 온실 기반 고설 재배" />
+            <CropVideoCard video="/paprika.mp4" name="파프리카" desc="대형 연동 온실 수경 재배" />
+            <CropVideoCard video="/cucumber.mp4" name="오이" desc="연동 온실 수경 재배" />
+            <CropVideoCard video="/tomato.mp4" name="방울토마토" desc="연동 온실 수경 재배" />
+          </div>
         </div>
       </section>
 
@@ -211,6 +235,35 @@ function SummaryCard({
       </div>
       <p className="text-xl font-bold text-green-700">{value}</p>
       <p className="text-xs text-gray-400 mt-2">{desc}</p>
+    </div>
+  );
+}
+
+function CropVideoCard({
+  video,
+  name,
+  desc,
+}: {
+  video: string;
+  name: string;
+  desc: string;
+}) {
+  return (
+    <div className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+      <div className="overflow-hidden">
+        <video
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      <div className="p-4">
+        <h3 className="font-semibold text-gray-900">{name}</h3>
+        <p className="text-xs text-gray-500 mt-1">{desc}</p>
+      </div>
     </div>
   );
 }
