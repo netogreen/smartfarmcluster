@@ -58,7 +58,7 @@ export async function getApplications(): Promise<Application[]> {
 }
 
 export async function addApplication(
-  data: Omit<Application, "id" | "status" | "created_at">
+  data: Omit<Application, "id" | "status" | "created_at" | "memo" | "customer_type" | "land_status" | "land_info">
 ): Promise<Application> {
   const newApp: Application = {
     ...data,
