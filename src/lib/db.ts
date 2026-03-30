@@ -20,6 +20,10 @@ export interface Application {
   timing: string;
   wants_consultation: boolean;
   status: string;
+  memo: string;
+  customer_type: string;
+  land_status: string;
+  land_info: string;
   created_at: string;
 }
 
@@ -60,6 +64,10 @@ export async function addApplication(
     ...data,
     id: `APP-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
     status: "신규",
+    memo: "",
+    customer_type: "클러스터 입주 희망",
+    land_status: "없음",
+    land_info: "",
     created_at: new Date().toISOString(),
   };
 
@@ -94,6 +102,29 @@ export async function updateApplicationStatus(
   const idx = apps.findIndex((a) => a.id === id);
   if (idx === -1) return null;
   apps[idx].status = status;
+  writeFileSync(DB_PATH, JSON.stringify(apps, null, 2), "utf-8");
+  return apps[idx];
+}
+
+export async function updateApplicationFields(
+  id: string,
+  fields: Partial<Pick<Application, "status" | "memo" | "customer_type" | "land_status" | "land_info">>
+): Promise<Application | null> {
+  if (isSupabaseConfigured() && supabase) {
+    const { data, error } = await supabase
+      .from("applications")
+      .update(fields)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) return null;
+    return data;
+  }
+
+  const apps = ensureLocalDb();
+  const idx = apps.findIndex((a) => a.id === id);
+  if (idx === -1) return null;
+  Object.assign(apps[idx], fields);
   writeFileSync(DB_PATH, JSON.stringify(apps, null, 2), "utf-8");
   return apps[idx];
 }

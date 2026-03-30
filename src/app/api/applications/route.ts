@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addApplication, getApplications, updateApplicationStatus, deleteApplication, deleteApplications } from "@/lib/db";
+import { addApplication, getApplications, updateApplicationStatus, updateApplicationFields, deleteApplication, deleteApplications } from "@/lib/db";
 import { sendApplicantSMS, sendAdminSMS } from "@/lib/sms";
 
 export async function GET(req: NextRequest) {
@@ -73,8 +73,21 @@ export async function PATCH(req: NextRequest) {
   }
 
   try {
-    const { id, status } = await req.json();
-    const result = await updateApplicationStatus(id, status);
+    const body = await req.json();
+    const { id, status, memo, customer_type, land_status, land_info } = body;
+
+    // 다중 필드 업데이트
+    const fields: Record<string, string> = {};
+    if (status !== undefined) fields.status = status;
+    if (memo !== undefined) fields.memo = memo;
+    if (customer_type !== undefined) fields.customer_type = customer_type;
+    if (land_status !== undefined) fields.land_status = land_status;
+    if (land_info !== undefined) fields.land_info = land_info;
+
+    const result = Object.keys(fields).length === 1 && fields.status
+      ? await updateApplicationStatus(id, fields.status)
+      : await updateApplicationFields(id, fields);
+
     if (!result) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
