@@ -160,6 +160,7 @@ export default function AdminPage() {
     landOwners: apps.filter((a) => a.land_status === "보유").length,
     totalArea: apps.reduce((s, a) => s + a.estimated_area, 0),
     totalModules: apps.reduce((s, a) => s + a.estimated_modules, 0),
+    totalBudget: apps.reduce((s, a) => s + a.budget_eok, 0),
     budgetRanges: getBudgetRanges(apps),
   };
 
@@ -196,7 +197,7 @@ export default function AdminPage() {
         {/* 통계 카드 */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           <StatCard label="총 신청자" value={`${stats.total}명`} />
-          <StatCard label="상담 희망자" value={`${stats.consultationCount}명`} />
+          <StatCard label="총 예정규모" value={`${stats.totalBudget.toFixed(1)}억원`} />
           <StatCard label="토지 보유" value={`${stats.landOwners}명`} />
           <StatCard label="총 예상 평수" value={`${stats.totalArea.toLocaleString()}평`} />
           <StatCard label="총 예상 모듈" value={`${stats.totalModules.toFixed(1)}모듈`} />
@@ -256,15 +257,16 @@ export default function AdminPage() {
                     <th className="px-3 py-3 text-left font-medium text-gray-600">작목</th>
                     <th className="px-3 py-3 text-left font-medium text-gray-600">예정규모</th>
                     <th className="px-3 py-3 text-left font-medium text-gray-600">상태</th>
+                    <th className="px-3 py-3 text-left font-medium text-gray-600">상담</th>
                     <th className="px-3 py-3 text-left font-medium text-gray-600">등록일</th>
                     <th className="px-3 py-3 text-left font-medium text-gray-600">삭제</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={9} className="px-4 py-8 text-center text-gray-500">불러오는 중...</td></tr>
+                    <tr><td colSpan={10} className="px-4 py-8 text-center text-gray-500">불러오는 중...</td></tr>
                   ) : filteredApps.length === 0 ? (
-                    <tr><td colSpan={9} className="px-4 py-8 text-center text-gray-400">신청자가 없습니다.</td></tr>
+                    <tr><td colSpan={10} className="px-4 py-8 text-center text-gray-400">신청자가 없습니다.</td></tr>
                   ) : (
                     filteredApps.map((app) => (
                       <tr key={app.id} className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${detailApp?.id === app.id ? "bg-green-50" : ""}`} onClick={() => setDetailApp(app)}>
@@ -281,6 +283,7 @@ export default function AdminPage() {
                             {STATUS_OPTIONS.map((s) => (<option key={s} value={s}>{s}</option>))}
                           </select>
                         </td>
+                        <td className="px-3 py-3 text-center">{app.wants_consultation ? <span className="text-green-600 font-semibold">O</span> : <span className="text-gray-300">-</span>}</td>
                         <td className="px-3 py-3 text-xs text-gray-400">{new Date(app.created_at).toLocaleDateString("ko-KR")}</td>
                         <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
                           <button onClick={() => deleteApp(app.id, app.name)} className="text-xs text-red-500 hover:text-red-700">삭제</button>
