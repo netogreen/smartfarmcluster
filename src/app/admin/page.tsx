@@ -152,7 +152,7 @@ export default function AdminPage() {
 
   const stats = {
     total: apps.length,
-    byRegion: groupBy(apps, "region"),
+    byRegion: groupByProvince(apps),
     byCrop: groupBy(apps, "crop"),
     byStatus: groupBy(apps, "status"),
     byCustomerType: groupBy(apps, "customer_type"),
@@ -468,6 +468,15 @@ function groupBy(apps: Application[], key: keyof Application): Record<string, nu
   for (const app of apps) {
     const val = String(app[key] || "");
     result[val] = (result[val] || 0) + 1;
+  }
+  return result;
+}
+
+function groupByProvince(apps: Application[]): Record<string, number> {
+  const result: Record<string, number> = {};
+  for (const app of apps) {
+    const province = (app.region || "").split(" ")[0] || "(미설정)";
+    result[province] = (result[province] || 0) + 1;
   }
   return result;
 }

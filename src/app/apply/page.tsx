@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { cropList, getCropByName } from "@/lib/cropModels";
 import { calculateCrop, formatManWon } from "@/lib/calculate";
+import { REGIONS, PROVINCE_LIST } from "@/lib/regions";
 
 declare global {
   interface Window {
@@ -10,7 +11,7 @@ declare global {
   }
 }
 
-const REGIONS = ["경북", "경남", "전북", "전남", "기타"];
+// REGIONS는 lib/regions.ts에서 import
 const CROPS = [...cropList.map((c) => c.name), "기타"];
 const TIMINGS = [
   "2026년 하반기",
@@ -26,8 +27,9 @@ export default function ApplyPage() {
     phone: "",
     email: "",
     isSuccessorFarmer: "",
-    region: "",
-    regionOther: "",
+    province: "",
+    city: "",
+    addressDetail: "",
     crop: "",
     cropOther: "",
     budget: "",
@@ -67,7 +69,7 @@ export default function ApplyPage() {
     e.preventDefault();
     setError("");
 
-    if (!form.name || !form.phone || !form.isSuccessorFarmer || !form.region || !form.crop || !form.budget || !form.timing || !form.wantsConsultation) {
+    if (!form.name || !form.phone || !form.isSuccessorFarmer || !form.province || !form.city || !form.crop || !form.budget || !form.timing || !form.wantsConsultation) {
       setError("필수 항목을 모두 입력해주세요.");
       return;
     }
@@ -92,7 +94,7 @@ export default function ApplyPage() {
         phone: form.phone,
         email: form.email || null,
         is_successor_farmer: form.isSuccessorFarmer,
-        region: form.region === "기타" ? form.regionOther : form.region,
+        region: `${form.province} ${form.city}${form.addressDetail ? " " + form.addressDetail : ""}`,
         crop: form.crop === "기타" ? form.cropOther : form.crop,
         budget_eok: budgetNum,
         estimated_area: result ? result.displayAreaPy : Math.round((budgetNum / 2.42) * 242 * 10) / 10,
@@ -245,23 +247,57 @@ export default function ApplyPage() {
               희망 조건
             </legend>
 
-            <FormField label="희망 지역" required>
-              <RadioGroup
-                name="region"
-                options={REGIONS}
-                value={form.region}
-                onChange={(v) => updateForm("region", v)}
-              />
-              {form.region === "기타" && (
+            <FormField label="희망 지역 (도)" required>
+              <div className="flex flex-wrap gap-2">
+                {PROVINCE_LIST.map((p) => (
+                  <label
+                    key={p}
+                    className={`px-4 py-2.5 rounded-lg border text-sm cursor-pointer transition-colors ${
+                      form.province === p
+                        ? "bg-green-50 border-green-500 text-green-700 font-medium"
+                        : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="province"
+                      value={p}
+                      checked={form.province === p}
+                      onChange={() => { updateForm("province", p); updateForm("city", ""); }}
+                      className="sr-only"
+                    />
+                    {p}
+                  </label>
+                ))}
+              </div>
+            </FormField>
+
+            {form.province && REGIONS[form.province] && (
+              <FormField label="희망 지역 (시/군)" required>
+                <select
+                  value={form.city}
+                  onChange={(e) => updateForm("city", e.target.value)}
+                  className="form-input"
+                >
+                  <option value="">시/군을 선택해주세요</option>
+                  {REGIONS[form.province].map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </FormField>
+            )}
+
+            {form.city && (
+              <FormField label="상세 주소" hint="선택">
                 <input
                   type="text"
-                  value={form.regionOther}
-                  onChange={(e) => updateForm("regionOther", e.target.value)}
-                  placeholder="희망 지역을 입력해주세요"
-                  className="form-input mt-2"
+                  value={form.addressDetail}
+                  onChange={(e) => updateForm("addressDetail", e.target.value)}
+                  placeholder="읍/면/리 또는 상세 위치"
+                  className="form-input"
                 />
-              )}
-            </FormField>
+              </FormField>
+            )}
 
             <FormField label="희망 작목" required>
               <RadioGroup
