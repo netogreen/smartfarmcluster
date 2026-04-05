@@ -288,7 +288,7 @@ export default function ApplyPage() {
             )}
 
             {form.city && (
-              <FormField label="상세 주소" hint="선택">
+              <FormField label="상세 주소" hint="선택 · 작성 시 보다 상세한 상담이 가능합니다">
                 <input
                   type="text"
                   value={form.addressDetail}
