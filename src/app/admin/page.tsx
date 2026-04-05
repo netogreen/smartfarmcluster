@@ -153,7 +153,7 @@ export default function AdminPage() {
   const stats = {
     total: apps.length,
     byRegion: groupByProvince(apps),
-    byCrop: groupBy(apps, "crop"),
+    byCrop: groupByCrop(apps),
     byStatus: groupBy(apps, "status"),
     byCustomerType: groupBy(apps, "customer_type"),
     consultationCount: apps.filter((a) => a.wants_consultation).length,
@@ -468,6 +468,21 @@ function groupBy(apps: Application[], key: keyof Application): Record<string, nu
   for (const app of apps) {
     const val = String(app[key] || "");
     result[val] = (result[val] || 0) + 1;
+  }
+  return result;
+}
+
+function normalizeCrop(crop: string): string {
+  const lower = (crop || "").trim();
+  if (/토마토/.test(lower)) return "토마토";
+  return lower || "(미설정)";
+}
+
+function groupByCrop(apps: Application[]): Record<string, number> {
+  const result: Record<string, number> = {};
+  for (const app of apps) {
+    const crop = normalizeCrop(app.crop);
+    result[crop] = (result[crop] || 0) + 1;
   }
   return result;
 }
