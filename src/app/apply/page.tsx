@@ -69,7 +69,7 @@ export default function ApplyPage() {
     e.preventDefault();
     setError("");
 
-    if (!form.name || !form.phone || !form.isSuccessorFarmer || !form.province || !form.city || !form.crop || !form.budget || !form.timing || !form.wantsConsultation) {
+    if (!form.name || !form.phone || !form.isSuccessorFarmer || !form.province || !form.crop || !form.budget || !form.timing || !form.wantsConsultation) {
       setError("필수 항목을 모두 입력해주세요.");
       return;
     }
@@ -273,7 +273,7 @@ export default function ApplyPage() {
             </FormField>
 
             {form.province && REGIONS[form.province] && (
-              <FormField label="희망 지역 (시/군)" required>
+              <FormField label="희망 지역 (시/군)" hint="선택 · 작성 시 보다 상세한 상담이 가능합니다">
                 <select
                   value={form.city}
                   onChange={(e) => updateForm("city", e.target.value)}
@@ -287,7 +287,7 @@ export default function ApplyPage() {
               </FormField>
             )}
 
-            {form.city && (
+            {form.province && (
               <FormField label="상세 주소" hint="선택 · 작성 시 보다 상세한 상담이 가능합니다">
                 <input
                   type="text"
