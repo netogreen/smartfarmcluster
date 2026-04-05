@@ -439,7 +439,7 @@ function GroupCard({ title, data }: { title: string; data: Record<string, number
     <div className="bg-white rounded-xl p-5 border border-gray-200">
       <h3 className="text-sm font-semibold text-gray-700 mb-3">{title}</h3>
       <div className="space-y-2">
-        {Object.entries(data).map(([key, count]) => (
+        {Object.entries(data).sort((a, b) => b[1] - a[1]).map(([key, count]) => (
           <div key={key} className="flex justify-between text-sm">
             <span className="text-gray-600">{key || "(미설정)"}</span>
             <span className="font-medium">{count}명</span>
