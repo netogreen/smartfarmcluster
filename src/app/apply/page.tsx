@@ -95,9 +95,9 @@ export default function ApplyPage() {
         region: form.region === "기타" ? form.regionOther : form.region,
         crop: form.crop === "기타" ? form.cropOther : form.crop,
         budget_eok: budgetNum,
-        estimated_area: result ? result.displayAreaPy : budgetNum * 100,
-        estimated_modules: result ? result.displayModules : 0,
-        recommended_note: result ? `${result.displayModules.toFixed(1)}${selectedCropModel?.displayUnit || "모듈"}` : "별도 상담",
+        estimated_area: result ? result.displayAreaPy : Math.round((budgetNum / 2.42) * 242 * 10) / 10,
+        estimated_modules: result ? result.displayModules : Math.round((budgetNum / 2.42) * 10) / 10,
+        recommended_note: result ? `${result.displayModules.toFixed(1)}${selectedCropModel?.displayUnit || "모듈"}` : `${(Math.round((budgetNum / 2.42) * 10) / 10).toFixed(1)}모듈(연동)`,
         deposit_example: result ? result.depositManwon : Math.round(budgetNum * 100),
         timing: form.timing,
         wants_consultation: form.wantsConsultation === "예",
@@ -306,10 +306,31 @@ export default function ApplyPage() {
             {!selectedCropModel && form.crop && form.crop !== "기타" && (
               <p className="text-xs text-gray-400">작물을 선택하면 계산 결과가 표시됩니다.</p>
             )}
-            {form.crop === "기타" && form.budget && (
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-sm text-gray-600">
-                  기타 작물은 별도 상담을 통해 안내드립니다. 예산 {budgetNum}억원이 등록됩니다.
+            {form.crop === "기타" && form.budget && !isNaN(budgetNum) && budgetNum > 0 && (
+              <div className="bg-green-50 rounded-xl p-5 border border-green-100">
+                <h3 className="text-sm font-semibold text-green-800 mb-3">
+                  과채 기준(연동) 참고 계산 결과
+                </h3>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p className="text-gray-500 text-xs">적용 모듈 규격</p>
+                    <p className="font-semibold text-gray-900 text-xs">W8 x L100 x H6 / 242평 / 연동</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs">예상 가능 면적</p>
+                    <p className="font-semibold text-gray-900">약 {Math.round((budgetNum / 2.42) * 242).toLocaleString()}평</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs">예상 모듈 수</p>
+                    <p className="font-bold text-green-700">{(Math.round((budgetNum / 2.42) * 10) / 10).toFixed(1)}모듈(연동)</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs">우선 가계약금 예시</p>
+                    <p className="font-semibold text-gray-900">{Math.round(budgetNum * 100).toLocaleString()}만원</p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 mt-3">
+                  기타 작물은 과채 기준(연동 242평)으로 참고 계산됩니다. 실제 조건은 별도 상담을 통해 안내드립니다.
                 </p>
               </div>
             )}
