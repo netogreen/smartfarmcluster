@@ -487,10 +487,27 @@ function groupByCrop(apps: Application[]): Record<string, number> {
   return result;
 }
 
+const KNOWN_PROVINCES = ["경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"];
+
+function extractProvince(region: string): string {
+  if (!region) return "(미설정)";
+  // "경기도" → "경기"
+  const normalized = region.replace(/도$/, "").replace(/특별자치도$/, "");
+  // 첫 단어가 도 이름인지 확인
+  const first = region.split(" ")[0].replace(/도$/, "");
+  if (KNOWN_PROVINCES.includes(first)) return first;
+  // 전체 문자열에서 도 이름 찾기
+  for (const p of KNOWN_PROVINCES) {
+    if (region.includes(p)) return p;
+  }
+  // 시/군 이름만 있는 경우 그대로 표시
+  return normalized || "(미설정)";
+}
+
 function groupByProvince(apps: Application[]): Record<string, number> {
   const result: Record<string, number> = {};
   for (const app of apps) {
-    const province = (app.region || "").split(" ")[0] || "(미설정)";
+    const province = extractProvince(app.region);
     result[province] = (result[province] || 0) + 1;
   }
   return result;
